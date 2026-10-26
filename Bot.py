@@ -1023,13 +1023,16 @@ async def on_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         qr_file_id = s.get("qr_file_id")
         if qr_file_id:
             try:
+                # Ekane problem ta chilo, seta fix kora hoyeche
+                upi_id_str = str(s.get("upi_id", "faridh@fam"))
+                caption_text = (
+                    f"{box_title('♛ ᴜᴘɪ ǫʀ ♛')}\n"
+                    f"{box_line(f'<code>{html.escape(upi_id_str)}</code>')}\n"
+                    f"{box_close()}"
+                )
                 await q.message.reply_photo(
                     photo=qr_file_id,
-                    caption=(
-                        f"{box_title('♛ ᴜᴘɪ ǫʀ ♛')}\n"
-                        f"{box_line(f'<code>{html.escape(str(s.get(\"upi_id\", \"faridh@fam\")))}</code>')}\n"
-                        f"{box_close()}"
-                    ),
+                    caption=caption_text,
                     parse_mode="HTML",
                 )
             except (NetworkError, TimedOut, BadRequest) as exc:
